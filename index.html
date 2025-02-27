@@ -83,7 +83,7 @@ The hallmark of rubella is: ,Generalized lymphadenopathy ,Tonsillar exudates ,Ko
                 
                 // Fetch the CSV file from the same directory
                 try {
-                    const response = await fetch('Questions.csv');
+                    const response = await fetch('https://raw.githubusercontent.com/ZeeshanCoding13/medical-test/main/Questions.csv');
                     
                     if (!response.ok) {
                         throw new Error(`Failed to load CSV file: ${response.status} ${response.statusText}`);
@@ -479,28 +479,19 @@ The hallmark of rubella is: ,Generalized lymphadenopathy ,Tonsillar exudates ,Ko
             questionText.textContent = question.question;
             
             // Update image
-            if (question.image && question.image !== "null" && question.image !== "") {
-                try {
-                    // First try to load from the images folder
-                    const imagePath = question.image.includes('/') ? question.image : `images/${question.image}`;
-                    questionImage.src = imagePath;
-                    questionImage.alt = `Image for question ${currentQuestionIndex + 1}`;
-                    questionImage.classList.remove('hidden');
-                    
-                    // Handle image load error
-                    questionImage.onerror = function() {
-                        // Fall back to placeholder if image doesn't load
-                        questionImage.src = `https://via.placeholder.com/400x300?text=${encodeURIComponent(question.image)}`;
-                    };
-                } catch (error) {
-                    // Use placeholder as fallback
-                    questionImage.src = `https://via.placeholder.com/400x300?text=${encodeURIComponent(question.image)}`;
-                    questionImage.alt = `Image for question ${currentQuestionIndex + 1}`;
-                    questionImage.classList.remove('hidden');
-                }
-            } else {
-                questionImage.classList.add('hidden');
-            }
+   if (question.image && question.image !== "null" && question.image !== "") {
+    const imagePath = `https://raw.githubusercontent.com/ZeeshanCoding13/medical-test/main/images/${question.image}`;
+    questionImage.src = imagePath;
+    questionImage.alt = `Image for question ${currentQuestionIndex + 1}`;
+    questionImage.classList.remove('hidden');
+    
+    questionImage.onerror = function() {
+        console.error(`Failed to load image: ${imagePath}`);
+        questionImage.src = `https://via.placeholder.com/400x300?text=${encodeURIComponent(question.image)}`;
+    };
+} else {
+    questionImage.classList.add('hidden');
+}
             
             // Update options
             optionsContainer.innerHTML = '';
