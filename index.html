@@ -87,7 +87,7 @@ The hallmark of rubella is: ,Generalized lymphadenopathy ,Tonsillar exudates ,Ko
                 
                 // Fetch the CSV file from the same directory
                 try {
-                    const response = await fetch('Questions.csv');
+                    const response = await fetch('https://raw.githubusercontent.com/ZeeshanCoding13/medical-test/main/Questions.csv');
                     
                     if (!response.ok) {
                         throw new Error(`Failed to load CSV file: ${response.status} ${response.statusText}`);
@@ -486,6 +486,7 @@ The hallmark of rubella is: ,Generalized lymphadenopathy ,Tonsillar exudates ,Ko
             if (question.image && question.image !== "null" && question.image !== "") {
                 try {
                     // First try to load from the images folder
+                        //const imagePath = `https://raw.githubusercontent.com/ZeeshanCoding13/medical-test/main/images/${question.image}`;
                     const imagePath = question.image.includes('/') ? question.image : `images/${question.image}`;
                     questionImage.src = imagePath;
                     questionImage.alt = `Image for question ${currentQuestionIndex + 1}`;
